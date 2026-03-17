@@ -185,10 +185,37 @@ export default function About() {
       </motion.div>
 
       <div className="relative max-w-6xl mx-auto">
+        
+        {/* Mobile Header (Hidden on Desktop) */}
+        <div className="block md:hidden mb-8 px-4">
+          <motion.h2
+            className="text-3xl font-bold text-slate-800 tracking-tight"
+            initial={{ opacity: 0, x: 40, filter: 'blur(4px)' }}
+            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ type: "spring", bounce: 0.4, duration: 1 }}
+          >
+            Who is the{' '}
+            <span className="bg-gradient-to-r from-violet-600 to-rose-500 bg-clip-text text-transparent inline-block">
+              Designer?
+            </span>
+          </motion.h2>
+
+          <motion.p
+            className="text-base text-slate-600 leading-relaxed font-medium mt-4"
+            initial={{ opacity: 0, x: 40, filter: 'blur(4px)' }}
+            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            I'm a passionate graphic designer who creates visually compelling brand identities and digital experiences that leave a lasting mark.
+          </motion.p>
+        </div>
+
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left: Designer photo with 3D tilt */}
           <motion.div
-            className="relative order-2 md:order-1 flex justify-center md:justify-start"
+            className="relative flex justify-center md:justify-start px-4 md:px-0"
             initial={{ opacity: 0, x: -60, filter: 'blur(10px)' }}
             whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
             viewport={{ once: true, margin: "-100px" }}
@@ -229,7 +256,7 @@ export default function About() {
 
           {/* Right: Content */}
           <motion.div
-            className="order-1 md:order-2 space-y-6 lg:pl-8"
+            className="space-y-6 lg:pl-8 px-4 md:px-0"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -238,28 +265,31 @@ export default function About() {
               visible: { transition: { staggerChildren: 0.15 } }
             }}
           >
-            <motion.h2
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 tracking-tight"
-              variants={{
-                hidden: { opacity: 0, x: 40, filter: 'blur(4px)' },
-                visible: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { type: "spring", bounce: 0.4, duration: 1 } }
-              }}
-            >
-              Who is the{' '}
-              <span className="bg-gradient-to-r from-violet-600 to-rose-500 bg-clip-text text-transparent inline-block">
-                Designer?
-              </span>
-            </motion.h2>
+            {/* Desktop Header (Hidden on Mobile) */}
+            <div className="hidden md:block">
+              <motion.h2
+                className="text-4xl lg:text-5xl font-bold text-slate-800 tracking-tight"
+                variants={{
+                  hidden: { opacity: 0, x: 40, filter: 'blur(4px)' },
+                  visible: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { type: "spring", bounce: 0.4, duration: 1 } }
+                }}
+              >
+                Who is the{' '}
+                <span className="bg-gradient-to-r from-violet-600 to-rose-500 bg-clip-text text-transparent inline-block">
+                  Designer?
+                </span>
+              </motion.h2>
 
-            <motion.p
-              className="text-base md:text-lg text-slate-600 leading-relaxed font-medium max-w-lg"
-              variants={{
-                hidden: { opacity: 0, x: 40, filter: 'blur(4px)' },
-                visible: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { duration: 0.8 } }
-              }}
-            >
-              I'm a passionate graphic designer who creates visually compelling brand identities and digital experiences that leave a lasting mark.
-            </motion.p>
+              <motion.p
+                className="text-lg text-slate-600 leading-relaxed font-medium max-w-lg mt-6"
+                variants={{
+                  hidden: { opacity: 0, x: 40, filter: 'blur(4px)' },
+                  visible: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { duration: 0.8 } }
+                }}
+              >
+                I'm a passionate graphic designer who creates visually compelling brand identities and digital experiences that leave a lasting mark.
+              </motion.p>
+            </div>
 
             {/* Experience counters */}
             <motion.div

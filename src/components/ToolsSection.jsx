@@ -76,29 +76,29 @@ export default function ToolsSection() {
   }, [isDragging])
 
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden bg-slate-50">
-      {/* Background with delicate grid */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200" />
+    <section className="relative py-24 md:py-32 overflow-hidden bg-slate-950">
+      {/* Premium Dark Background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black" />
       <div
-        className="absolute inset-0 opacity-50"
+        className="absolute inset-0 opacity-20 mix-blend-screen"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px)
+            linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
           `,
           backgroundSize: '48px 48px',
         }}
       />
 
-      {/* Floating background blobs */}
+      {/* Floating background glowing orbs */}
       <motion.div
-        className="absolute top-[10%] left-[5%] w-64 h-64 rounded-full bg-violet-400/20 blur-[80px]"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3], x: [0, 50, 0] }}
+        className="absolute top-[10%] left-[5%] w-72 h-72 rounded-full bg-violet-600/20 blur-[100px]"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4], x: [0, 50, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
-        className="absolute bottom-[20%] right-[10%] w-80 h-80 rounded-full bg-indigo-400/20 blur-[100px]"
-        animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.6, 0.3], y: [0, -50, 0] }}
+        className="absolute bottom-[20%] right-[10%] w-96 h-96 rounded-full bg-teal-600/20 blur-[120px]"
+        animate={{ scale: [1.2, 1, 1.2], opacity: [0.4, 0.7, 0.4], y: [0, -50, 0] }}
         transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
       />
 
@@ -112,13 +112,13 @@ export default function ToolsSection() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-sm font-bold tracking-[0.2em] text-slate-400 uppercase mb-2 block -mt-10">
+            <span className="text-sm font-bold tracking-[0.2em] text-violet-400 uppercase mb-2 block -mt-10 drop-shadow-md">
               Creative Toolkit
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-800 tracking-tight leading-tight">
-              Tools I <span className="bg-gradient-to-r from-violet-600 via-indigo-500 to-sky-500 bg-clip-text text-transparent">Master</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+              Tools I <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-teal-400 bg-clip-text text-transparent">Master</span>
             </h2>
-            <p className="mt-4 -mb-10 text-slate-500 max-w-xl mx-auto text-lg leading-relaxed">
+            <p className="mt-4 -mb-10 text-slate-400 max-w-xl mx-auto text-lg leading-relaxed">
               The creative software that powers my design workflow and brings bold ideas to life with precision and style.
             </p>
           </motion.div>
@@ -168,21 +168,21 @@ export default function ToolsSection() {
                   }}
                 >
                   <motion.div
-                    className="relative w-[260px] h-[340px] md:w-[320px] md:h-[420px] rounded-[2rem] overflow-hidden"
+                    className="relative w-[260px] h-[340px] md:w-[320px] md:h-[420px] rounded-[2rem] overflow-hidden backdrop-blur-xl"
                     style={{
-                      background: 'linear-gradient(145deg, rgba(255,255,255,1), rgba(248,250,252,0.9))',
+                      background: 'linear-gradient(145deg, rgba(30,41,59,0.7), rgba(15,23,42,0.8))',
                       boxShadow: isActive
-                        ? '0 30px 60px -15px rgba(0,0,0,0.15), 0 0 0 1px rgba(226,232,240,1)'
-                        : '0 10px 15px -3px rgba(0,0,0,0.05), 0 0 0 1px rgba(226,232,240,0.5)',
+                        ? `0 30px 60px -15px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1), 0 0 40px -10px ${tool.glow}`
+                        : '0 10px 15px -3px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05)',
                     }}
                     whileHover={isActive ? { y: -10, transition: { duration: 0.2 } } : {}}
                   >
-                    {/* Active Soft Glow Background */}
+                    {/* Active Soft Glow Background Inside Card */}
                     <div
                       className="absolute inset-0 transition-opacity duration-500 pointer-events-none"
                       style={{
-                        background: `radial-gradient(ellipse at 50% 0%, ${tool.glow} 0%, transparent 80%)`,
-                        opacity: isActive ? 0.35 : 0,
+                        background: `radial-gradient(ellipse at 50% 0%, ${tool.glow} 0%, transparent 70%)`,
+                        opacity: isActive ? 0.6 : 0,
                       }}
                     />
 
@@ -208,12 +208,12 @@ export default function ToolsSection() {
                       </motion.div>
 
                       {/* Text area with subtle dark gradient contrast on active */}
-                      <div className="absolute bottom-0 left-0 w-full px-8 py-8 text-center flex flex-col items-center bg-gradient-to-t from-slate-50 to-transparent">
-                        <h3 className="font-bold text-2xl md:text-3xl tracking-wide text-slate-800 mb-2 drop-shadow-sm">
+                      <div className="absolute bottom-0 left-0 w-full px-8 py-8 text-center flex flex-col items-center bg-gradient-to-t from-black/60 to-transparent">
+                        <h3 className="font-bold text-2xl md:text-3xl tracking-wide text-white mb-2 drop-shadow-md">
                           {tool.name}
                         </h3>
                         <span
-                          className="font-bold text-xs tracking-[0.2em] uppercase px-4 py-1.5 rounded-full text-slate-600 bg-white shadow-sm border border-slate-100"
+                          className="font-bold text-xs tracking-[0.2em] uppercase px-4 py-1.5 rounded-full text-slate-300 bg-white/10 backdrop-blur-md shadow-sm border border-white/10"
                         >
                           {tool.category}
                         </span>
@@ -232,11 +232,11 @@ export default function ToolsSection() {
           {tools.map((_, idx) => (
             <button
               key={idx}
-              className="relative w-12 h-2 rounded-full overflow-hidden bg-slate-200 transition-colors hover:bg-slate-300 focus:outline-none"
+              className="relative w-12 h-2 rounded-full overflow-hidden bg-slate-800 transition-colors hover:bg-slate-700 focus:outline-none"
               onClick={() => setActiveIndex(idx)}
             >
               <motion.div
-                className="absolute inset-y-0 left-0 bg-indigo-500 w-full Origin-left"
+                className="absolute inset-y-0 left-0 bg-violet-400 w-full origin-left"
                 initial={false}
                 animate={{
                   scaleX: activeIndex === idx ? 1 : 0,

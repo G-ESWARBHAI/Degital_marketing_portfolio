@@ -54,10 +54,10 @@ function StackedProjectCard({ project, index, totalProjects, scrollYProgress, on
   const rotateAmount = isEven ? 2 : -2;
 
   // Compute styles based on relative position
-  // Tighter scaling (0.96, 0.92) and slightly adjusted Y for layered depth
-  const y = useTransform(relativePosition, [-1, 0, 1, 2, 3], [-800, -20, 30, 80, 130]);
+  // Increased Y offsets so cards peek out noticeably from the bottom to show clear depth
+  const y = useTransform(relativePosition, [-1, 0, 1, 2, 3], [-800, 0, 45, 90, 135]);
   const scale = useTransform(relativePosition, [-1, 0, 1, 2, 3], [1.05, 1, 0.96, 0.92, 0.88]);
-  const opacity = useTransform(relativePosition, [-1, -0.2, 0, 1, 2, 3], [0, 0, 1, 0.7, 0.4, 0]);
+  const opacity = useTransform(relativePosition, [-1, -0.2, 0, 1, 2, 3], [0, 0, 1, 0.85, 0.5, 0]);
   const zIndex = useTransform(relativePosition, pos => Math.round(50 - pos * 10));
   const blur = useTransform(relativePosition, [-1, 0, 1, 2], ['blur(0px)', 'blur(0px)', 'blur(1px)', 'blur(3px)']);
 
@@ -65,7 +65,7 @@ function StackedProjectCard({ project, index, totalProjects, scrollYProgress, on
   const rotate = useTransform(
     relativePosition,
     [-1, 0, 1, 2, 3],
-    [0, 0, rotateAmount, rotateAmount * 2, rotateAmount * 3]
+    [0, 0, rotateAmount * 0.5, rotateAmount, rotateAmount * 1.5]
   );
 
   // Dynamic shadows depending on depth level + a soft focal glow for the front layer
@@ -97,6 +97,7 @@ function StackedProjectCard({ project, index, totalProjects, scrollYProgress, on
         top: 0,
         left: 0,
         right: 0,
+        height: '100%',
         transformOrigin: "top center"
       }}
       className="w-full max-w-6xl mx-auto will-change-transform"
@@ -105,7 +106,7 @@ function StackedProjectCard({ project, index, totalProjects, scrollYProgress, on
         type="button"
         onClick={() => onSelect(project)}
         style={{ boxShadow }}
-        className="group block w-full text-left relative rounded-3xl overflow-hidden bg-slate-900 border border-white/10 cursor-pointer"
+        className="group block w-full h-full text-left relative rounded-3xl overflow-hidden bg-slate-900 border border-white/10 cursor-pointer"
         whileHover={{ y: -8, scale: 1.01 }}
         transition={{ type: 'spring', stiffness: 350, damping: 30 }}
         onMouseEnter={(e) => {
@@ -117,7 +118,7 @@ function StackedProjectCard({ project, index, totalProjects, scrollYProgress, on
           if (video) { video.pause(); video.currentTime = 0 }
         }}
       >
-        <div className={`relative overflow-hidden w-full aspect-video md:aspect-[21/9]`}>
+        <div className={`relative overflow-hidden w-full h-full`}>
           {project.video ? (
             <>
               <video
@@ -329,7 +330,7 @@ export default function ProjectsGallery() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${activeCategory === cat
+              className={`px-3 md:px-4 py-1.5 md:py-2.5 rounded-full md:rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 ${activeCategory === cat
                 ? 'bg-slate-800 text-white shadow-lg shadow-slate-300/50'
                 : 'bg-white/80 text-slate-600 hover:bg-white hover:text-slate-800 border border-slate-200 hover:border-slate-300'
                 }`}
@@ -344,9 +345,9 @@ export default function ProjectsGallery() {
         <div ref={sectionRef} style={{ height: `${filteredProjects.length * 100}vh`, position: 'relative' }}>
 
           {/* Sticky container that stays fixed while scrolling through the tall div */}
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden py-24">
+          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden py-16 md:py-24 px-4">
 
-            <div className="relative w-full h-full max-w-5xl mx-auto flex items-center justify-center">
+            <div className="relative w-full max-w-5xl mx-auto aspect-[4/5] sm:aspect-[16/9] md:aspect-[21/9]">
               <AnimatePresence mode="popLayout">
                 {filteredProjects.map((project, i) => (
                   <StackedProjectCard

@@ -124,7 +124,7 @@ export default function Navbar() {
           <a href="#home" className="block group">
             <motion.img
               src={heroImg}
-              alt="Alex"
+              alt="Dinesh"
               className="rounded-full object-cover ring-2 ring-slate-200 group-hover:ring-sky-500 transition-all"
               animate={{ width: isCollapsed ? 40 : 96, height: isCollapsed ? 40 : 96 }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
@@ -141,7 +141,7 @@ export default function Navbar() {
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  Alex
+                  Dinesh
                 </motion.a>
                 <motion.div
                   className="flex gap-4 mt-3"
@@ -180,8 +180,8 @@ export default function Navbar() {
                     href={link.href}
                     title={isCollapsed ? link.name : undefined}
                     className={`flex items-center gap-3 px-3 py-3 rounded-lg transition-colors group relative ${isCollapsed ? 'justify-center' : 'justify-start'} ${isActive
-                        ? 'text-sky-600 bg-sky-50'
-                        : 'text-slate-600 hover:text-sky-600 hover:bg-slate-100'
+                      ? 'text-sky-600 bg-sky-50'
+                      : 'text-slate-600 hover:text-sky-600 hover:bg-slate-100'
                       }`}
                   >
                     <span className={`absolute bottom-0 left-3 right-3 h-0.5 bg-sky-500 rounded-full transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'}`} />
@@ -250,10 +250,10 @@ export default function Navbar() {
       <a href="#home" className="fixed top-4 left-4 z-40 md:hidden flex items-center gap-2">
         <img
           src={heroImg}
-          alt="Alex"
+          alt="Dinesh"
           className="w-10 h-10 rounded-full object-cover ring-2 ring-slate-200"
         />
-        <span className="font-bold text-slate-800 text-lg">Alex</span>
+        <span className="font-bold text-slate-800 text-lg">Dinesh</span>
       </a>
       <div className="fixed top-4 right-4 z-40 md:hidden">
         <MobileSidebarTrigger />
@@ -297,11 +297,11 @@ function MobileSidebarTrigger() {
           >
             <div className="p-6 flex flex-col items-center border-b border-slate-200">
               <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop"
-                alt="Alex"
+                src={heroImg}
+                alt="Dinesh"
                 className="w-16 h-16 rounded-full object-cover ring-2 ring-slate-100"
               />
-              <span className="mt-3 font-semibold text-slate-800">Alex</span>
+              <span className="mt-3 font-semibold text-slate-800">Dinesh</span>
               <div className="flex gap-4 mt-2">
                 {socialLinks.map((link) => (
                   <a key={link.name} href={link.href} target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-slate-900 transition-colors">

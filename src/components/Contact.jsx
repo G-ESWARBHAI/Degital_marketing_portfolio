@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from 'react'
 import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion'
 
 const socialLinks = [
-  { name: 'Email', href: 'mailto:alex@example.com', gradient: 'from-rose-500 to-pink-500' },
+  { name: 'Email', href: 'mailto:Dinesh@example.com', gradient: 'from-rose-500 to-pink-500' },
   { name: 'LinkedIn', href: 'https://linkedin.com', gradient: 'from-blue-500 to-blue-700' },
   { name: 'Instagram', href: 'https://instagram.com', gradient: 'from-pink-500 via-rose-500 to-amber-500' },
   { name: 'Behance', href: 'https://behance.net', gradient: 'from-blue-600 to-indigo-700' },
@@ -52,7 +52,7 @@ export default function Contact() {
   }
 
   const copyEmail = useCallback(async () => {
-    await navigator.clipboard.writeText('alex@example.com')
+    await navigator.clipboard.writeText('Dinesh@example.com')
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }, [])
@@ -169,9 +169,8 @@ export default function Contact() {
                           value={formData.name}
                           onChange={handleChange}
                           placeholder="Your name"
-                          className={`w-full bg-transparent border-b-2 py-3 px-1 text-white placeholder-slate-500 outline-none transition-all duration-300 ${
-                            errors.name ? 'border-rose-500' : 'border-slate-600 focus:border-violet-400'
-                          }`}
+                          className={`w-full bg-transparent border-b-2 py-3 px-1 text-white placeholder-slate-500 outline-none transition-all duration-300 ${errors.name ? 'border-rose-500' : 'border-slate-600 focus:border-violet-400'
+                            }`}
                         />
                         {errors.name && <p className="mt-1 text-xs text-rose-400">{errors.name}</p>}
                       </div>
@@ -182,9 +181,8 @@ export default function Contact() {
                           value={formData.email}
                           onChange={handleChange}
                           placeholder="you@example.com"
-                          className={`w-full bg-transparent border-b-2 py-3 px-1 text-white placeholder-slate-500 outline-none transition-all duration-300 ${
-                            errors.email ? 'border-rose-500' : 'border-slate-600 focus:border-violet-400'
-                          }`}
+                          className={`w-full bg-transparent border-b-2 py-3 px-1 text-white placeholder-slate-500 outline-none transition-all duration-300 ${errors.email ? 'border-rose-500' : 'border-slate-600 focus:border-violet-400'
+                            }`}
                         />
                         {errors.email && <p className="mt-1 text-xs text-rose-400">{errors.email}</p>}
                       </div>
@@ -198,9 +196,8 @@ export default function Contact() {
                         placeholder="Your creative brief..."
                         rows={4}
                         maxLength={400}
-                        className={`w-full bg-transparent border-b-2 py-3 px-1 text-white placeholder-slate-500 outline-none resize-none transition-all duration-300 ${
-                          errors.message ? 'border-rose-500' : 'border-slate-600 focus:border-violet-400'
-                        }`}
+                        className={`w-full bg-transparent border-b-2 py-3 px-1 text-white placeholder-slate-500 outline-none resize-none transition-all duration-300 ${errors.message ? 'border-rose-500' : 'border-slate-600 focus:border-violet-400'
+                          }`}
                       />
                       <div className="flex justify-between mt-1">
                         {errors.message && <p className="text-xs text-rose-400">{errors.message}</p>}
@@ -271,7 +268,7 @@ export default function Contact() {
                 <div className="relative flex items-center justify-between gap-4">
                   <div>
                     <p className="text-slate-400 text-sm mb-1">Email me directly</p>
-                    <p className="text-white font-medium">alex@example.com</p>
+                    <p className="text-white font-medium">Dinesh@example.com</p>
                   </div>
                   <motion.span
                     className="px-4 py-2 rounded-xl bg-white/10 text-sm font-medium text-white"

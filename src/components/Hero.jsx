@@ -176,19 +176,19 @@ const PortfolioCard = ({ children, delay, isLeft, index }) => {
   }, []);
 
   const xDirection = isLeft ? -1 : 1;
-  
+
   // Calculate spread logic to fill extreme edges
   // Index 0: Furthest away (outer edge)
   // Index 1: Middle
   // Index 2: Closest to center portrait
-  
+
   // Base distances outward -> making them spread far
-  const baseSpreadX = isMobile ? 65 : 140; 
+  const baseSpreadX = isMobile ? 65 : 140;
   const gapX = isMobile ? 50 : 120;
-  
+
   // The magic spread logic for wide distribution
   const getSpreadX = (idx) => {
-    switch(idx) {
+    switch (idx) {
       case 0: return xDirection * (baseSpreadX + gapX * 2.2); // Outer
       case 1: return xDirection * (baseSpreadX + gapX);       // Middle
       case 2: return xDirection * baseSpreadX;                // Inner
@@ -198,7 +198,7 @@ const PortfolioCard = ({ children, delay, isLeft, index }) => {
 
   // Y layout to form an upward arc shape like wings
   const getSpreadY = (idx) => {
-    switch(idx) {
+    switch (idx) {
       case 0: return isMobile ? -60 : -120; // Highest
       case 1: return isMobile ? -30 : -60;  // Mid
       case 2: return isMobile ? 10 : 20;    // Lowest 
@@ -209,7 +209,7 @@ const PortfolioCard = ({ children, delay, isLeft, index }) => {
   // Scale calculations for depth effect
   const getScale = (idx) => {
     const mobileScaleFactor = isMobile ? 0.65 : 1; // Make cards smaller on mobile
-    switch(idx) {
+    switch (idx) {
       case 0: return 0.8 * mobileScaleFactor;  // Smallest (furthest)
       case 1: return 0.9 * mobileScaleFactor;  // Medium
       case 2: return 1.05 * mobileScaleFactor; // Largest (closest)
@@ -219,7 +219,7 @@ const PortfolioCard = ({ children, delay, isLeft, index }) => {
 
   // Rotation: tilting outward like wings
   const getRotation = (idx) => {
-    switch(idx) {
+    switch (idx) {
       case 0: return xDirection * 24; // Steeper angle on outside
       case 1: return xDirection * 15;
       case 2: return xDirection * 6;  // Gentle angle near center
@@ -231,22 +231,22 @@ const PortfolioCard = ({ children, delay, isLeft, index }) => {
   const spreadY = getSpreadY(index);
   const rotation = getRotation(index);
   const finalScale = getScale(index);
-  
+
   // Slight blur effect on outer elements to create field depth
   const blurValue = index === 0 ? 'blur(1px)' : 'blur(0px)';
 
   return (
     <motion.div
       className="absolute top-1/2 left-1/2 -mt-24 -ml-16 md:-mt-36 md:-ml-24 z-10" // Centered starting position behind portrait
-      initial={{ 
+      initial={{
         opacity: 0,
-        x: 0, 
+        x: 0,
         y: 0,
         scale: 0.3,
         rotate: 0,
         filter: 'blur(4px)'
       }}
-      animate={{ 
+      animate={{
         opacity: 1,
         x: spreadX,
         y: spreadY,
@@ -260,13 +260,13 @@ const PortfolioCard = ({ children, delay, isLeft, index }) => {
         damping: 12,    // Bouncier
         delay: 0.4 + delay, // Staggered delays
       }}
-      whileHover={{ 
+      whileHover={{
         scale: finalScale * 1.15,
         y: spreadY - 20,
         rotate: rotation + (xDirection * 4),
         zIndex: 50,
         filter: 'blur(0px)', // Remove blur on hover
-        transition: { type: 'spring', stiffness: 300, damping: 20 } 
+        transition: { type: 'spring', stiffness: 300, damping: 20 }
       }}
     >
       <motion.div
@@ -345,7 +345,10 @@ export default function Hero() {
             <Typewriter words={['Graphic Designer', 'UI Designer', 'Brand Designer', 'video editor']} />
           </span>
         </motion.h1>
+      </div>
 
+      {/* Tags and Buttons - Moved to order-last (bottom) on mobile, normal order on md+ */}
+      <div className="relative z-30 flex flex-col items-center order-last md:order-none px-6 pb-20 md:pb-4 mt-4 md:mt-0">
         <motion.div
           className="flex flex-wrap gap-2 justify-center mb-8"
           initial={{ opacity: 0, y: 20 }}
@@ -355,7 +358,7 @@ export default function Hero() {
           {['Branding', 'UI', 'Posters', 'Social Media'].map((tag) => (
             <span
               key={tag}
-              className="px-4 py-1.5 rounded-lg text-sm font-medium text-slate-600 bg-white/70 backdrop-blur border border-slate-200/60 shadow-sm"
+              className="px-3 py-1 md:px-4 md:py-1.5 rounded-lg text-xs md:text-sm font-medium text-slate-600 bg-white/70 backdrop-blur border border-slate-200/60 shadow-sm"
             >
               {tag}
             </span>
@@ -363,14 +366,14 @@ export default function Hero() {
         </motion.div>
 
         <motion.div
-          className="flex flex-wrap gap-4 justify-center"
+          className="flex flex-row gap-2 md:gap-4 justify-center w-full sm:w-auto px-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
           <motion.a
             href="#work"
-            className="group flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-teal-500 to-emerald-400 text-white rounded-xl font-semibold shadow-lg shadow-teal-200/50 hover:shadow-xl hover:shadow-teal-300/40 transition-all"
+            className="group flex-1 sm:flex-none flex items-center justify-center gap-1.5 md:gap-2 px-3 py-2.5 md:px-7 md:py-3.5 bg-gradient-to-r from-teal-500 to-emerald-400 text-white rounded-xl text-xs sm:text-sm md:text-base font-semibold shadow-lg shadow-teal-200/50 hover:shadow-xl hover:shadow-teal-300/40 transition-all whitespace-nowrap"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -379,7 +382,7 @@ export default function Hero() {
           </motion.a>
           <motion.a
             href="#"
-            className="group flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-violet-500 to-rose-400 text-white rounded-xl font-semibold shadow-lg shadow-violet-200/50 hover:shadow-xl hover:shadow-rose-200/40 transition-all"
+            className="group flex-1 sm:flex-none flex items-center justify-center gap-1.5 md:gap-2 px-3 py-2.5 md:px-7 md:py-3.5 bg-gradient-to-r from-violet-500 to-rose-400 text-white rounded-xl text-xs sm:text-sm md:text-base font-semibold shadow-lg shadow-violet-200/50 hover:shadow-xl hover:shadow-rose-200/40 transition-all whitespace-nowrap"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -392,8 +395,8 @@ export default function Hero() {
 
 
       {/* CENTER: Portrait + Portfolio Cards Container */}
-      <div className="relative flex-1 min-h-[400px] md:min-h-[600px] flex items-center justify-center w-full py-12 md:py-0 overflow-hidden">
-        
+      <div className="relative flex-1 min-h-[350px] md:min-h-[600px] flex items-center justify-center w-full py-2 md:py-0 overflow-hidden order-none">
+
         {/* Animated Portfolio Preview Cards */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           {/* Left Cards (Outer to Inner) */}
@@ -430,9 +433,9 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, scale: 0.88 }}
             animate={{ opacity: 1, scale: 1 }}
-            whileHover={{ 
+            whileHover={{
               scale: 0.92,
-              transition: { type: 'spring', stiffness: 400, damping: 25 } 
+              transition: { type: 'spring', stiffness: 400, damping: 25 }
             }}
             whileTap={{ scale: 0.88 }}
             transition={{ duration: 1, delay: 0.3 }}
@@ -456,7 +459,7 @@ export default function Hero() {
             >
               <img
                 src={heroImg}
-                alt="Alex - Graphic Designer"
+                alt="Dinesh - Graphic Designer"
                 className="w-full h-full object-cover object-top rounded-3xl"
               />
             </div>
