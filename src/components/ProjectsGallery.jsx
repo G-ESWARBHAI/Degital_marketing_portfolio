@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, useInView, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import { API_URL } from '../config'
 
 const categories = ['All', 'Branding', 'Logo Design', 'Posters', 'Social Media', 'UI Design', 'Packaging', 'Motion']
 
@@ -236,7 +237,7 @@ export default function ProjectsGallery() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/projects')
+        const res = await fetch(`${API_URL}/api/projects`)
         const data = await res.json()
         setProjects(data)
         setLoading(false)

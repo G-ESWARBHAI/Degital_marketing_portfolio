@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { API_URL } from '../config';
 
 const categories = ['All', 'Branding', 'Logo Design', 'Posters', 'Social Media', 'UI Design', 'Packaging', 'Motion'];
 const layoutOptions = ['portrait', 'landscape', 'square', 'wide'];
@@ -29,7 +30,7 @@ export default function AdminDashboard() {
 
   const fetchProjects = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/projects');
+      const res = await fetch(`${API_URL}/api/projects`);
       const data = await res.json();
       setProjects(data);
     } catch (err) {
@@ -102,8 +103,8 @@ export default function AdminDashboard() {
     if (formData.video) data.append('video', formData.video);
 
     const url = editingProject 
-      ? `http://localhost:5000/api/projects/${editingProject._id}`
-      : `http://localhost:5000/api/projects`;
+      ? `${API_URL}/api/projects/${editingProject._id}`
+      : `${API_URL}/api/projects`;
       
     const method = editingProject ? 'PUT' : 'POST';
 
@@ -136,7 +137,7 @@ export default function AdminDashboard() {
     if (!window.confirm('Are you sure you want to delete this project?')) return;
     
     try {
-      const res = await fetch(`http://localhost:5000/api/projects/${id}`, {
+      const res = await fetch(`${API_URL}/api/projects/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
