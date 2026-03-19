@@ -208,8 +208,20 @@ export default function Navbar() {
           </ul>
         </nav>
 
+        {/* Admin Login */}
+        <div className="px-4 mb-4 mt-auto shrink-0">
+          <a
+            href="/login"
+            className={`w-full flex items-center justify-center gap-2 py-3 rounded-lg text-white bg-slate-900 hover:bg-slate-800 transition-colors shadow-md ${isCollapsed ? 'px-2 flex-col' : ''}`}
+          >
+            <span className="text-sm font-semibold whitespace-nowrap overflow-hidden">
+              {isCollapsed ? 'Admin' : 'Admin Login'}
+            </span>
+          </a>
+        </div>
+
         {/* Collapse button */}
-        <div className="p-4 pt-0 border-t border-slate-200 shrink-0">
+        <div className="p-4 pt-4 border-t border-slate-200 shrink-0">
           <motion.button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="w-full flex items-center justify-center gap-2 py-3 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
@@ -328,6 +340,14 @@ function MobileSidebarTrigger() {
                   </motion.a>
                 )
               })}
+              <div className="mt-4 pt-4 border-t border-slate-200">
+                <a
+                  href="/login"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-white bg-slate-900 hover:bg-slate-800 transition-colors shadow-md"
+                >
+                  <span className="font-semibold">Admin Login</span>
+                </a>
+              </div>
             </nav>
           </motion.div>
         )}

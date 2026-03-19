@@ -1,28 +1,9 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, useInView, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 
 const categories = ['All', 'Branding', 'Logo Design', 'Posters', 'Social Media', 'UI Design', 'Packaging', 'Motion']
 
 const PROJECTS_PER_PAGE = 8
-
-const projects = [
-  { id: 1, title: 'Nova Coffee Brand', category: 'Branding', description: 'Full brand identity for a specialty coffee roaster. Logo, packaging, and store signage.', image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&h=400&fit=crop', layout: 'portrait' },
-  { id: 2, title: 'TechFlow Logo', category: 'Logo Design', description: 'Modern tech startup mark with clean geometry and versatile lockups.', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=500&fit=crop', layout: 'portrait' },
-  { id: 3, title: 'Summer Festival Poster', category: 'Posters', description: 'Vibrant event poster with bold typography and energetic color palette.', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=700&fit=crop', layout: 'portrait' },
-  { id: 4, title: 'Instagram Campaign', category: 'Social Media', description: 'Social media kit and carousel designs for a lifestyle brand launch.', image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=450&fit=crop', layout: 'landscape' },
-  { id: 5, title: 'Finance App UI', category: 'UI Design', description: 'Mobile-first banking app with intuitive dashboards and clear data visualization.', image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=450&fit=crop', layout: 'landscape' },
-  { id: 6, title: 'Organic Skincare Pack', category: 'Packaging', description: 'Eco-friendly packaging design with minimalist aesthetic and sustainable materials.', image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&h=400&fit=crop', layout: 'square' },
-  { id: 7, title: 'Brand Motion Reel', category: 'Motion', description: 'Animated brand reveal and social media motion graphics.', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=450&fit=crop', layout: 'landscape' },
-  { id: 8, title: 'Minimalist A Logo', category: 'Logo Design', description: 'Single-letter monogram with refined proportions for luxury brand.', image: 'https://images.unsplash.com/photo-1626785774626-2b35e4d1c585?w=600&h=400&fit=crop', layout: 'square' },
-  { id: 9, title: 'Concert Poster', category: 'Posters', description: 'Retro-inspired concert poster with bold typography and neon accents.', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=450&fit=crop', layout: 'landscape' },
-  { id: 10, title: 'Social Media Kit', category: 'Social Media', description: 'Complete social templates for consistent brand presence across platforms.', image: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=600&h=450&fit=crop', layout: 'portrait' },
-  { id: 11, title: 'Dashboard Design', category: 'UI Design', description: 'Analytics dashboard with real-time charts and customizable widgets.', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop', layout: 'landscape' },
-  { id: 12, title: 'Wine Box Packaging', category: 'Packaging', description: 'Premium wine gift box with embossed details and elegant typography.', image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&h=550&fit=crop', layout: 'portrait' },
-  { id: 13, title: 'Product Demo Video', category: 'Motion', description: 'Product showcase video with smooth transitions and call-to-action.', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=450&fit=crop', layout: 'landscape' },
-  { id: 14, title: 'Urban Wear Brand', category: 'Branding', description: 'Streetwear brand identity with bold graphics and urban aesthetic.', image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&h=600&fit=crop', layout: 'square' },
-  { id: 15, title: 'App Promo Video', category: 'Motion', description: 'Short-form app promo for social media and landing pages.', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=450&fit=crop', layout: 'landscape' },
-  { id: 16, title: 'Brand Campaign Banner', category: 'Branding', description: 'Wide-format campaign visuals for digital billboards and web headers.', image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&h=400&fit=crop', layout: 'wide' },
-]
 
 const layoutClasses = {
   portrait: 'aspect-[3/4]',
@@ -249,6 +230,23 @@ function ProjectModal({ project, onClose }) {
 export default function ProjectsGallery() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedProject, setSelectedProject] = useState(null)
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/projects')
+        const data = await res.json()
+        setProjects(data)
+        setLoading(false)
+      } catch (error) {
+        console.error('Failed to fetch projects:', error)
+        setLoading(false)
+      }
+    }
+    fetchProjects()
+  }, [])
 
   const sectionRef = useRef(null)
   const headerRef = useRef(null)
@@ -351,7 +349,7 @@ export default function ProjectsGallery() {
               <AnimatePresence mode="popLayout">
                 {filteredProjects.map((project, i) => (
                   <StackedProjectCard
-                    key={project.id}
+                    key={project._id || i}
                     project={project}
                     index={i}
                     totalProjects={filteredProjects.length}
@@ -380,7 +378,7 @@ export default function ProjectsGallery() {
       <AnimatePresence>
         {selectedProject && (
           <ProjectModal
-            key={selectedProject.id}
+            key={selectedProject._id}
             project={selectedProject}
             onClose={() => setSelectedProject(null)}
           />
