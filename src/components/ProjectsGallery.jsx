@@ -157,73 +157,81 @@ function ProjectModal({ project, onClose }) {
   if (!project) return null
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 w-screen h-screen"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
-      <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-sm" />
-      <motion.div
-        className="relative max-w-4xl w-full max-h-[90vh] rounded-2xl overflow-hidden flex flex-col"
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.95, opacity: 0 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+      {/* Full-screen image/video background */}
+      <div className="absolute inset-0 bg-slate-900">
+        {project.video ? (
+          <video
+            src={project.video}
+            poster={project.image}
+            muted
+            loop
+            playsInline
+            autoPlay
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover"
+          />
+        )}
+        {/* Dark gradient overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/70 to-slate-900/30" />
+      </div>
+
+      {/* Content overlay - bottom section */}
+      <div
+        className="absolute inset-0 flex flex-col justify-end p-6 md:p-12 lg:p-16 max-w-4xl"
         onClick={(e) => e.stopPropagation()}
-        style={{
-          background: 'linear-gradient(135deg, rgba(26,26,46,0.98) 0%, rgba(15,15,35,0.98) 100%)',
-          border: '1px solid rgba(255,255,255,0.1)',
-          boxShadow: '0 25px 80px rgba(0,0,0,0.5), 0 0 60px -10px rgba(139, 92, 246, 0.3)',
-        }}
       >
-        <div className="flex-1 overflow-y-auto">
-          <div className="relative aspect-video max-h-[50vh] bg-slate-800/50">
-            {project.video ? (
-              <video
-                src={project.video}
-                poster={project.image}
-                muted
-                loop
-                playsInline
-                autoPlay
-                className="w-full h-full object-contain"
-              />
-            ) : (
-              <img src={project.image} alt={project.title} className="w-full h-full object-contain" />
-            )}
-          </div>
-          <div className="p-6 md:p-8">
-            <div className="flex items-start justify-between gap-4 mb-4">
-              <div>
-                <span className="text-rose-400 text-xs font-semibold uppercase tracking-wider">{project.category}</span>
-                <h3 className="text-2xl font-bold text-white mt-1">{project.title}</h3>
-              </div>
-              <button
-                onClick={onClose}
-                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors shrink-0"
-                aria-label="Close"
-              >
-                <span className="text-xl">×</span>
-              </button>
-            </div>
-            <p className="text-slate-400">{project.description}</p>
-            <motion.a
-              href="#contact"
-              onClick={onClose}
-              className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition-colors"
-              style={{
-                background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.8) 0%, rgba(244, 63, 94, 0.8) 100%)',
-              }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Discuss this project
-              <span>→</span>
-            </motion.a>
-          </div>
-        </div>
-      </motion.div>
+        {/* Close button - top right */}
+        <button
+          onClick={onClose}
+          className="absolute top-6 right-6 md:top-8 md:right-8 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-all hover:scale-110 shrink-0 z-10"
+          aria-label="Close"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <motion.div
+          className="relative"
+          initial={{ y: 40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
+          <span className="inline-block px-4 py-1.5 text-rose-400 text-xs font-bold uppercase tracking-widest bg-rose-500/20 rounded-full border border-rose-400/30 mb-4">
+            {project.category}
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">{project.title}</h2>
+          <p className="text-slate-300 text-base md:text-lg leading-relaxed mb-8 max-w-2xl">{project.description}</p>
+
+          <motion.a
+            href="#contact"
+            onClick={onClose}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-white transition-all"
+            style={{
+              background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)',
+              boxShadow: '0 4px 20px -5px rgba(139, 92, 246, 0.5)',
+            }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Discuss this project
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </motion.a>
+        </motion.div>
+      </div>
     </motion.div>
   )
 }
@@ -248,6 +256,16 @@ export default function ProjectsGallery() {
     }
     fetchProjects()
   }, [])
+
+  // Lock body scroll when full-screen modal is open
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [selectedProject])
 
   const sectionRef = useRef(null)
   const headerRef = useRef(null)
@@ -310,7 +328,7 @@ export default function ProjectsGallery() {
         </motion.h2>
 
         <motion.p
-          className="text-center text-slate-500 mb-12 max-w-xl mx-auto"
+          className="text-center text-slate-500 mb-6 max-w-xl mx-auto"
           initial={{ opacity: 0, y: 15 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
@@ -320,7 +338,7 @@ export default function ProjectsGallery() {
 
         {/* Filter tabs */}
         <motion.div
-          className="flex flex-wrap justify-center gap-2 mb-12"
+          className="flex flex-wrap justify-center gap-2 mb-6"
           initial={{ opacity: 0, y: 15 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -344,9 +362,9 @@ export default function ProjectsGallery() {
         <div ref={sectionRef} style={{ height: `${filteredProjects.length * 100}vh`, position: 'relative' }}>
 
           {/* Sticky container that stays fixed while scrolling through the tall div */}
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden py-16 md:py-24 px-4">
+          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden py-6 md:py-8 px-4">
 
-            <div className="relative w-full max-w-5xl mx-auto aspect-[4/5] sm:aspect-[16/9] md:aspect-[21/9]">
+            <div className="relative w-full max-w-4xl mx-auto aspect-[4/5] sm:aspect-[3/2] md:aspect-[16/9]">
               <AnimatePresence mode="popLayout">
                 {filteredProjects.map((project, i) => (
                   <StackedProjectCard
